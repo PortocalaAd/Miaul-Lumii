@@ -3,245 +3,794 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIAUL LUMII | Portofoliu</title>
+    <title>MIAUL LUMII | Overloaded Gothic Lolita Journal</title>
     <link rel="icon" href="Dragon2.png" type="image/x-icon">
     <style>
-        html { scroll-behavior: smooth; }
-        img:hover { transform: scale(1.02); transition: 0.3s; cursor: pointer; }
-        .stars { font-size: 1em; vertical-align: middle; color: #d6a663; display: block; margin-top: 10px; }
-        
-        @media screen and (max-width: 600px) {
-            header h1 { font-size: 2.5em !important; letter-spacing: 2px !important; }
-            nav a { margin: 0 5px !important; font-size: 0.7em; display: inline-block; padding: 5px 0; }
-            .spotlight-table, .spotlight-table tr, .spotlight-table td { display: block !important; width: 100% !important; }
-            .spotlight-table td { margin-bottom: 20px; padding: 0 !important; }
-            img { max-width: 100%; height: auto; }
+        html { 
+            scroll-behavior: smooth; 
         }
+        
+        /* --- ANIMAȚII GOTICE --- */
+        @keyframes mișcareCeață {
+            0% { transform: translate(0px, 0px) scale(1); opacity: 0.4; }
+            33% { transform: translate(30px, -50px) scale(1.1); opacity: 0.6; }
+            66% { transform: translate(-40px, 20px) scale(0.95); opacity: 0.3; }
+            100% { transform: translate(0px, 0px) scale(1); opacity: 0.4; }
+        }
+
+        @keyframes mișcareCeațăA {
+            0% { transform: translate(0px, 0px) scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: translate(80px, -40px) scale(1.15) rotate(180deg); opacity: 0.55; }
+            100% { transform: translate(0px, 0px) scale(1) rotate(360deg); opacity: 0.3; }
+        }
+
+        @keyframes mișcareCeațăB {
+            0% { transform: translate(0px, 0px) scale(1.2) rotate(180deg); opacity: 0.2; }
+            50% { transform: translate(-60px, 50px) scale(0.9) rotate(0deg); opacity: 0.45; }
+            100% { transform: translate(0px, 0px) scale(1.2) rotate(-180deg); opacity: 0.2; }
+        }
+
+        @keyframes floatParticule {
+            0% { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(50px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes gothFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes gothFloatReverse {
+            0% { transform: translateY(-4px); }
+            50% { transform: translateY(2px); }
+            100% { transform: translateY(-4px); }
+        }
+
+        @keyframes gothPulse {
+            0% { text-shadow: 0 0 3px rgba(179, 135, 40, 0.4), 2px 2px 2px #000; box-shadow: 0 0 10px rgba(179,135,40,0.1); }
+            50% { text-shadow: 0 0 12px rgba(252, 246, 186, 0.8), 2px 2px 4px #000; box-shadow: 0 0 25px rgba(179,135,40,0.4); }
+            100% { text-shadow: 0 0 3px rgba(179, 135, 40, 0.4), 2px 2px 2px #000; box-shadow: 0 0 10px rgba(179,135,40,0.1); }
+        }
+
+        @keyframes laceWave {
+            0% { background-position-x: 0px; }
+            100% { background-position-x: 32px; }
+        }
+
+        /* --- STREAMING_CHUNK: Base body styling and cursor setup... --- */
+        /* --- FUNDAL PRINCIPAL (BODY) --- */
+        body {
+            background-color: #020202;
+            background-image: 
+                linear-gradient(rgba(5, 4, 3, 0.96), rgba(1, 1, 1, 0.98)),
+                linear-gradient(45deg, rgba(179, 135, 40, 0.02) 25%, transparent 25%, transparent 75%, rgba(179, 135, 40, 0.02) 75%, rgba(179, 135, 40, 0.02)),
+                linear-gradient(135deg, rgba(74, 65, 53, 0.05) 25%, transparent 25%, transparent 75%, rgba(74, 65, 53, 0.05) 75%, rgba(74, 65, 53, 0.05)),
+                radial-gradient(rgba(179, 135, 40, 0.03) 1px, transparent 0);
+            background-size: 100% 100%, 60px 60px, 60px 60px, 20px 20px;
+            
+            /* Imaginea ta ca și cursor personalizat pe tot site-ul, cu cruce ca fallback */
+            cursor: url('Dragon3.png') 16 16, crosshair; 
+            
+            color: #d4ceb8;
+            font-family: 'Times New Roman', 'Georgia', serif;
+            margin: 0;
+            padding: 30px;
+            overflow-x: hidden;
+            
+            border: 16px solid #0d0b09;
+            outline: 2px solid #b38728;
+            outline-offset: -12px;
+            box-shadow: 
+                inset 0 0 0 4px #4a4135,
+                inset 0 0 0 8px #030303,
+                inset 0 0 0 10px #b38728,
+                inset 0 0 60px rgba(0,0,0,1);
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+
+        /* Asigură cursorul custom și pe elemente active */
+        a, button, .album-box, nav a, .playlist-track, .btn-inapoi, .lightbox-close, .modal-img {
+            cursor: url('Dragon3.png') 16 16, pointer !important;
+        }
+
+        /* --- CEAȚĂ GOTICĂ --- */
+        .ceata-gotica {
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            z-index: -1;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 30% 40%, rgba(74, 65, 53, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(46, 38, 29, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 30%, rgba(90, 85, 75, 0.12) 0%, transparent 55%);
+            filter: blur(60px);
+            animation: mișcareCeață 25s ease-in-out infinite;
+        }
+
+        .goth-fog-wrapper {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none; overflow: hidden;
+        }
+        .ceata-strata {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(74, 65, 53, 0.18) 0%, transparent 50%),
+                radial-gradient(circle at 80% 40%, rgba(179, 135, 40, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 40% 70%, rgba(46, 38, 29, 0.22) 0%, transparent 50%);
+            filter: blur(50px);
+            animation: mișcareCeațăA 30s ease-in-out infinite;
+        }
+        .ceata-stratb {
+            position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(circle at 70% 20%, rgba(90, 85, 75, 0.15) 0%, transparent 55%),
+                radial-gradient(circle at 30% 80%, rgba(20, 18, 15, 0.3) 0%, transparent 50%);
+            filter: blur(70px);
+            animation: mișcareCeațăB 25s ease-in-out infinite;
+        }
+
+        /* --- STREAMING_CHUNK: Decorative dividers and interface details... --- */
+        /* --- PARTICULE --- */
+        .background-particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+        .bg-particle {
+            position: absolute; color: rgba(179, 135, 40, 0.25);
+            font-family: serif; user-select: none;
+            animation: floatParticule linear infinite;
+        }
+
+        /* --- DECORAȚIUNI MARGINI --- */
+        .goth-corner-decoration {
+            position: fixed; width: 40px; height: 40px; z-index: 9999; pointer-events: none;
+            color: #b38728; font-size: 20px; text-shadow: 0 0 5px #000;
+        }
+        .goth-top-left  { top: 25px; left: 25px; }
+        .goth-top-right { top: 25px; right: 25px; }
+        .goth-bot-left  { bottom: 25px; left: 25px; }
+        .goth-bot-right { bottom: 25px; right: 25px; }
+
+        .lace-divider {
+            width: 100%; height: 16px;
+            background-image: radial-gradient(circle at 8px 16px, transparent 5px, #4a4135 6px, #b38728 7px, transparent 8px);
+            background-size: 16px 16px; margin: 25px 0; position: relative;
+            animation: laceWave 8px linear infinite;
+        }
+        .lace-divider::after {
+            content: "❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖ ✟ ❖ ✥ ❖";
+            position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+            font-size: 10px; color: #4a4135; letter-spacing: 6px; white-space: nowrap;
+        }
+
+        .goth-bow { 
+            color: #b38728; font-size: 14px; text-shadow: 0 0 3px #000; 
+            display: inline-block; position: absolute; z-index: 15; 
+        }
+        .goth-bow::before { content: "⋈"; font-weight: bold; font-size: 18px; }
+
+        .text-auriu {
+            background: linear-gradient(135deg, #a37c3f 0%, #f7f1bd 30%, #b38728 50%, #fbf5b7 70%, #6e4e14 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: inline-block; filter: drop-shadow(2px 2px 2px #000); font-weight: bold;
+        }
+
+        .scris-auriu-solid { color: #fcf6ba !important; animation: gothPulse 4s ease-in-out infinite; }
+
+        /* --- STREAMING_CHUNK: Menu and avatar container styling... --- */
+        /* --- MENIU --- */
+        nav {
+            text-align: center; padding: 16px; background: #000000; border: 3px double #b38728; outline: 1px solid #4a4135; outline-offset: 4px;
+            position: sticky; top: 15px; z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,1);
+        }
+        nav a { text-decoration: none; margin: 0 15px; font-size: 1.05em; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s; padding: 4px 8px; display: inline-block; }
+        nav a:hover { color: #f5ebd7 !important; transform: scale(1.08); background: #0d0a08; outline: 1px dashed #4a4135; }
+
+        /* --- AVATAR PLUTITOR --- */
+        .character-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; margin: 45px 0; animation: gothFloat 5s ease-in-out infinite; }
+        .character-container {
+            position: relative; display: inline-block; padding: 18px; background: #0a0a0a; border: 1px solid #b38728;
+            outline: 4px double #4a4135; outline-offset: 5px; box-shadow: 0 20px 40px rgba(0,0,0,1);
+        }
+        .character-container::before { content: "✟"; position: absolute; top: -6px; left: -3px; color: #b38728; font-size: 1.3em; z-index: 10; }
+        .character-container::after { content: "✟"; position: absolute; top: -6px; right: -3px; color: #b38728; font-size: 1.3em; z-index: 10; }
+
+        .character-container:hover .img-a { display: none !important; }
+        .character-container:hover .img-b { display: block !important; }
+        .character-container:hover .bubble { display: block !important; }
+
+        .bubble {
+            position: absolute; top: -85px; left: 50%; transform: translateX(-50%); background: #f5ebd7; color: #1a1612;
+            padding: 10px 24px; border: 3px double #4a4135; outline: 1px solid #b38728; outline-offset: -4px;
+            font-size: 1.05em; font-weight: bold; letter-spacing: 1px; display: none; white-space: nowrap; box-shadow: 0 12px 30px rgba(0,0,0,0.85); z-index: 100;
+        }
+        .bubble::after { content: ""; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); border-width: 10px 10px 0; border-style: solid; border-color: #f5ebd7 transparent; }
+
+        /* --- STRUCTURĂ CASETE JURNAL --- */
+        .goth-frame {
+            border: 1px solid #b38728; outline: 6px double #4a4135; outline-offset: 8px; padding: 50px; background: #020202;
+            margin: 70px auto; max-width: 820px; position: relative;
+            box-shadow: 0 0 0 14px #0a0a0a, 0 0 0 16px #b38728, 0 30px 60px rgba(0,0,0,0.95);
+        }
+
+        .corner-decor { position: absolute; width: 30px; height: 30px; border: 2px solid #b38728; z-index: 5; }
+        .tl { top: -3px; left: -3px; border-right: none; border-bottom: none; }
+        .tr { top: -3px; right: -3px; border-left: none; border-bottom: none; }
+        .bl { bottom: -3px; left: -3px; border-right: none; border-top: none; }
+        .br { bottom: -3px; right: -3px; border-left: none; border-top: none; }
+
+        .goth-lines-divider { display: flex; align-items: center; justify-content: center; margin: 45px auto; max-width: 650px; }
+        .goth-lines-divider .line { flex-grow: 1; height: 4px; border-top: 1px solid #b38728; border-bottom: 1px solid #4a4135; }
+        .goth-lines-divider .center-symbol { padding: 0 20px; color: #b38728; font-size: 1.5em; letter-spacing: 4px; animation: gothPulse 3s ease-in-out infinite; }
+
+        /* --- STREAMING_CHUNK: Album boxes, aspect ratio fixes & hover animations... --- */
+        /* --- ARHIVĂ COLECȚII (GRILĂ ȘI HOVER REPARATE) --- */
+        .album-box {
+            background: #080706; 
+            padding: 16px; 
+            border: 1px solid #4a4135; 
+            outline: 3px double #b38728; 
+            outline-offset: -6px;
+            display: inline-block; 
+            margin: 20px; 
+            position: relative; 
+            box-shadow: 0 15px 35px rgba(0,0,0,1);
+            animation: gothFloatReverse 6s ease-in-out infinite; 
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: 220px; /* Lățime fixă uniformă */
+            box-sizing: border-box;
+        }
+        .album-box::before {
+            content: "✥ ⚜ ✥"; position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+            background: #030303; padding: 0 8px; font-size: 11px; color: #b38728; letter-spacing: 1px;
+            z-index: 10;
+        }
+        
+        /* HOVER EFECT MARE: Întreaga casetă reacționează lin la cursor */
+        .album-box:hover {
+            outline-color: #f7f1bd; 
+            background: #14110e; 
+            transform: scale(1.06) translateY(-8px) !important; 
+            animation-play-state: paused;
+            box-shadow: 0 25px 45px rgba(179,135,40,0.18);
+        }
+
+        /* CONTAINER PENTRU IMAGINE (Nu lasă imaginea să iasă din casetă) */
+        .art-img-container {
+            width: 100%;
+            height: 190px;
+            overflow: hidden;
+            border: 6px solid #14110e; 
+            outline: 1px dashed #b38728; 
+            background: #000;
+            position: relative;
+        }
+
+        /* REPARARE FORMĂ: Imaginile nu mai sunt turtite sau strivite niciodată! */
+        img.art-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Încadrează perfect imaginea, păstrând proporțiile și decupând fin marginile */
+            transition: transform 0.5s ease, filter 0.3s; 
+            display: block;
+        }
+        
+        /* ZOOM LA HOVER PE IMAGINE */
+        .album-box:hover img.art-img { 
+            transform: scale(1.08); 
+            filter: brightness(1.15) contrast(1.05); 
+        }
+
+        /* --- STREAMING_CHUNK: Lightbox dialog and full modal layout... --- */
+        /* --- NOUL SISTEM DE LIGHTBOX MODAL GOTIC (INTERACTION) --- */
+        .goth-modal {
+            display: none; /* Ascuns implicit */
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(2, 2, 2, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 5000;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            box-sizing: border-box;
+            padding: 40px 20px;
+        }
+        
+        .goth-modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #020202;
+            border: 1px solid #b38728;
+            outline: 6px double #4a4135;
+            outline-offset: 8px;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 0 0 14px #0a0a0a, 0 0 0 16px #b38728, 0 30px 60px rgba(0,0,0,0.95);
+            text-align: center;
+        }
+
+        /* GRILA DE IMAGINI COMPLET REPARATE ȘI MARI ÎN INTERIORUL ALBUMULUI */
+        .modal-img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            justify-items: center;
+        }
+
+        .modal-img-wrapper {
+            background: #0a0a0a;
+            padding: 10px;
+            border: 1px solid #4a4135;
+            outline: 2px dashed #b38728;
+            outline-offset: -5px;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 280px;
+            box-sizing: border-box;
+        }
+
+        .modal-img-wrapper:hover {
+            outline-style: solid;
+            outline-color: #fbf5b7;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(179,135,40,0.15);
+        }
+
+        /* DESENELE REALE: Aspect ratio nativ, zero strivire! */
+        .modal-img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain; /* Păstrează proporțiile perfecte, nu taie și nu strivește imaginea ta */
+            background: #000;
+            display: block;
+            border: 4px solid #14110e;
+        }
+
+        /* --- VIZUALIZATOR DE IMAGINE FULLSCREEN ULTRA-MARIT --- */
+        .fullscreen-viewer {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .fullscreen-viewer.active {
+            display: flex;
+            opacity: 1;
+        }
+        .fullscreen-img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain; /* Proporții matematice absolut perfecte! */
+            border: 3px double #b38728;
+            outline: 10px solid #0a0a0a;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
+
+        /* --- STREAMING_CHUNK: Playlists and footer decorative elements... --- */
+        /* --- MUZICĂ --- */
+        .playlist-container { border: 1px dashed #4a4135; padding: 12px; background: rgba(0,0,0,0.6); transition: all 0.4s ease; }
+        .playlist-container:hover .playlist-track { opacity: 0.12; filter: blur(2px) grayscale(1); border-color: #120f0c; }
+        
+        .playlist-container .playlist-track:hover {
+            opacity: 1 !important; filter: blur(0px) grayscale(0) !important; color: #fcf6ba !important;
+            background: #0f0d0a; border-color: #b38728; outline: 1px solid #4a4135; padding-left: 35px;
+            transform: scale(1.01); box-shadow: inset 0 0 15px rgba(179,135,40,0.2);
+        }
+
+        .playlist-track {
+            background: #030303; color: #a8a492 !important; padding: 14px 20px; margin: 8px 0;
+            display: flex; justify-content: space-between; text-decoration: none; border: 1px solid #241f19;
+            font-size: 1.05em; letter-spacing: 1px; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .playlist-track::before { content: "✥"; color: #4a4135; margin-right: 10px; }
+
+        .sub-baroc { font-size: 10px; letter-spacing: 7px; color: #4a4135; text-transform: uppercase; display: block; margin: 6px 0 20px 0; }
     </style>
 </head>
+<body>
 
-<body style="background-color: #1a1a1a; color: #e0e0e0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0;">
+    <!-- Dragonul din stânga sus -->
+    <img src="Dragon2.png" style="position: absolute; top: 20px; left: 20px; width: 40px; height: 40px; filter: drop-shadow(0 0 3px #b38728); z-index: 10000; pointer-events: none;" alt="Dragon">
 
-    <nav style="text-align: center; padding: 15px; background: #111; position: sticky; top: 0; border-bottom: 2px solid #e6be6d; z-index: 1000;">
-        <a href="#acasa" style="color: #f1d592; text-decoration: none; margin: 0 10px; font-weight: bold;">Home</a>
-        <a href="#despre" style="color: #f1d592; text-decoration: none; margin: 0 10px; font-weight: bold;">Despre Mine</a>
-        <a href="#colectii" style="color: #f1d592; text-decoration: none; margin: 0 10px; font-weight: bold;">Colecții</a>
-        <a href="#contact" style="color: #f1d592; text-decoration: none; margin: 0 10px; font-weight: bold;">🔗 Social</a>
-        <a href="#playlist" style="color: #f1d592; text-decoration: none; margin: 0 10px; font-weight: bold;">🎧 Muzică</a>
+    <!-- Containerele pentru ceața mișcătoare dublă -->
+    <div class="goth-fog-wrapper">
+        <div class="ceata-strata"></div>
+        <div class="ceata-stratb"></div>
+    </div>
+
+    <!-- Sistemul de particule plutitoare -->
+    <div class="background-particles">
+        <div class="bg-particle" style="left: 10%; font-size: 24px; animation-duration: 14s; animation-delay: 0s;">⋈</div>
+        <div class="bg-particle" style="left: 25%; font-size: 16px; animation-duration: 18s; animation-delay: 3s;">✟</div>
+        <div class="bg-particle" style="left: 40%; font-size: 20px; animation-duration: 16s; animation-delay: 7s;">🖤</div>
+        <div class="bg-particle" style="left: 55%; font-size: 28px; animation-duration: 22s; animation-delay: 1s;">⋈</div>
+        <div class="bg-particle" style="left: 70%; font-size: 18px; animation-duration: 15s; animation-delay: 5s;">💮</div>
+        <div class="bg-particle" style="left: 85%; font-size: 22px; animation-duration: 19s; animation-delay: 2s;">✟</div>
+        <div class="bg-particle" style="left: 95%; font-size: 15px; animation-duration: 25s; animation-delay: 4s;">⋈</div>
+    </div>
+
+    <!-- Stratul de atmosferă gotică și decorațiuni colțuri fixate pe ecran -->
+    <div class="ceata-gotica"></div>
+    <div class="goth-corner-decoration goth-top-left">✟</div>
+    <div class="goth-corner-decoration goth-top-right">✟</div>
+    <div class="goth-corner-decoration goth-bot-left">✟</div>
+    <div class="goth-corner-decoration goth-bot-right">✟</div>
+
+    <nav>
+        <a href="#acasa" class="scris-auriu-solid">✥ Acasă</a>
+        <a href="#despre" class="scris-auriu-solid">✥ Despre Mine</a>
+        <a href="#colectii" class="scris-auriu-solid">✥ Colecții</a>
+        <a href="#playlist" class="scris-auriu-solid">✥ Muzică</a>
+        <a href="#contact" class="scris-auriu-solid">✥ Social</a>
     </nav>
 
-    <header id="acasa" style="text-align: center; padding: 100px 10px; background: radial-gradient(circle, #45413a 0%, #1a1a1a 100%); border-bottom: 1px solid #333;">
-        <h1 style="color: #f1d592; margin: 0; font-size: 4em; letter-spacing: 5px;">-~|`MIAUL LUMII`|~-</h1>
-        <span style="color:#f1dc9f; ="stars">(*^▽^)/★*☆♪</span>
-        <div style="text-align: center; margin: 50px 0; position: relative; display: inline-block; width: 100%;">
-    
-    <div class="character-container" style="position: relative; display: inline-block; cursor: help;">
+    <header id="acasa" style="text-align: center; padding: 60px 10px 30px 10px; position: relative;">
+        <div style="position: absolute; top: 20px; left: 40px; color: #4a4135; font-size: 1.5em;">✟ 🎀 ✟</div>
+        <div style="position: absolute; top: 20px; right: 40px; color: #4a4135; font-size: 1.5em;">✟ 🎀 ✟</div>
+
+        <div class="lace-divider"></div>
         
-        <div class="bubble" style="
-            position: absolute; 
-            top: -40px; 
-            left: 50%; 
-            transform: translateX(-50%);
-            background: #f1d592; 
-            color: #111; 
-            padding: 10px 20px; 
-            border-radius: 15px; 
-            font-weight: bold;
-            display: none; /* Ascuns la început */
-            white-space: nowrap;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            z-index: 10;">
-         _~Bun venit pe site-ul meu ;3 ✨~_
+        <h1 class="text-auriu" style="font-size: 4.5em; letter-spacing: 16px; margin: 15px 0 0 0; line-height: 1.1;">MIAUL LUMII</h1>
+        <div class="sub-baroc">⌠ ✥ ─── MANA-SAMA MIRE ARCHIVE ─── ✥ ⌡</div>
+        
+        <div class="character-wrapper">
+            <div class="goth-bow" style="top: -12px; left: 50%; transform: translateX(-50%); font-size: 20px;"></div>
+            
+            <div class="character-container">
+                <div class="bubble">_~ Bun venit pe site-ul meu ;3 🦋 ✥ ~_</div>
+                <img src="aa1.png" class="img-a" width="220" style="display: block;" alt="Character A">
+                <img src="aa.png" class="img-b" width="220" style="display: none;" alt="Character B">
+            </div>
+        </div>
+        
+        <div class="goth-lines-divider">
+            <div class="line"></div>
+            <div class="center-symbol">✟</div>
+            <div class="line"></div>
         </div>
 
-        <img src="aa1.png" class="img-a" width="200" style="display: block; margin: auto;">
+        <h2 class="text-auriu" style="font-size: 1.35em; letter-spacing: 3px; margin: 10px 0; font-weight: normal; font-style: italic; color: #aeaa99;">
+            -~|`Aici imi voi atasa aproape toate desenele mele`|~-
+        </h2>
         
-        <img src="aa.png" class="img-b" width="200" style="display: none; margin: auto;">
-
-    </div>
-     <h1 style="color: #96885b; margin: 0; font-size: em; letter-spacing: 5px;">-~|`Aici imi voi atasa aproape toate desenele mele`|~- </h1>
-</div>
-
-<style>
-    /* Logica pentru interacțiune */
-    .character-container:hover .img-a { display: none !important; } /* Ascunde poza A */
-    .character-container:hover .img-b { display: block !important; } /* Arată poza B */
-    .character-container:hover .bubble { display: block !important; } /* Arată textul */
-</style>
+        <div class="lace-divider" style="margin-top: 35px;"></div>
     </header>
 
-    <main style="max-width: 1100px; margin: auto; padding: 20px;">
-
-        <section id="despre" style="background-color: #111; padding: 40px; border-radius: 20px; border-left: 6px solid #e2b04a; margin: 40px 0;">
-            <h2 style="color: #f1d592; margin-top: 0;">The Artist Behind the Mask:"|</h2>
-            <div style="line-height: 1.8; font-size: 1.1em;">
-                <p>Salut!^^ Sunt o artistă de 17 ani aflată într-o continuă explorare vizuală. Călătoria mea a început în 2021, desenând pe ecranul telefonului, iar astăzi îmi transpun viziunile pe o tabletă grafică.</p>
-                <p>Mă definesc prin contrastul dintre <b>negru și auriu</b> — o combinație care mă caracterizează perfect. La fel ca o <b>eclipsă solară</b>, pot părea rece și brutală la exterior, însă în interior sunt un spirit cald și empatic.</p>
-                <p>Sunt pasionată de estetica <i>Goth Lolita</i> și ador pisicile, elemente care își găsesc adesea locul în creațiile mele digitale realizate în Krita.</p>
-            </div>
-        </section>
-
-        <section id="colectii" style="padding: 40px 0;">
-            <h2 style="text-align: center; color: #f1d592;">_^~Arhiva de Proiecte~^_</h2>
-            <p style="text-align: center; color: #888;">Selectează un album pentru a vedea lucrările -^-</p>
+    <main>
+        <!-- MANUSCRIPT / DESPRE MINE -->
+        <section id="despre" class="goth-frame" style="animation: gothFloat 7s ease-in-out infinite;">
+            <div class="goth-bow" style="top: -10px; left: 30px;"></div>
+            <div class="goth-bow" style="top: -10px; right: 30px;"></div>
             
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="#album-BAN" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Img1.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">BAN</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-
-                <a href="#album-FAN-ARTS" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Meow.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">FAN ARTS</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-                 <a href="#album-Procreate" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Ochi.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">Procreate</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-                 <a href="#album-IbisPaint" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Meow.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">IbisPaint</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-                 <a href="#album-Krita" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Meow.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">Krita</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-                 <a href="#album-ME" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Admy.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">ME</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-                 <a href="#album-My Characters" style="text-decoration: none; display: inline-block; margin: 10px;">
-                    <div style="background: #222; padding: 20px; border-radius: 20px; border: 1px solid #e2b04a;">
-                        <img src="Vall.jpg" width="250" style="border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
-                        <h3 style="color: #f1d592; margin-top: 15px;">My Characters</h3>
-                        <p style="color: #e2b04a; font-size: 0.9em;">Apasă pentru a deschide ⮕</p>
-                    </div>
-                </a>
-            </div>
+            <div class="corner-decor tl"></div><div class="corner-decor tr"></div>
+            <div class="corner-decor bl"></div><div class="corner-decor br"></div>
+            
+            <div style="text-align: center; font-size: 10px; color: #b38728; letter-spacing: 5px; margin-bottom: 5px;">MANUSCRIPT I</div>
+            <h2 class="text-auriu" style="text-align: center; font-size: 2.3em; margin: 0 0 10px 0; letter-spacing: 4px;">The Artist Behind the Mask ✟</h2>
+            <div style="text-align: center; color: #4a4135; font-size: 11px; margin-bottom: 25px;">❖ ────────── ✥ ────────── ❖</div>
+            
+            <p style="font-size: 1.15em; text-indent: 40px; text-align: justify; color: #aeaa99; line-height: 1.7; margin: 0 0 15px 0;">Salut!^^ Sunt o artistă de 17 ani aflată într-o continuă explorare vizuală. Călătoria mea a început în 2021, desenând pe ecranul telefonului, iar astăzi îmi transpun viziunile pe o tabletă grafică.</p>
+            <p style="font-size: 1.15em; text-indent: 40px; text-align: justify; color: #d4ceb8; line-height: 1.7; margin: 0 0 15px 0;">Mă definesc prin contrastul dintre <b style="color: #fff; text-shadow: 0 0 5px #b38728;">negru profund</b> și <span class="scris-auriu-solid">auriu strălucitor</span> — o combinație care mă caracterizează perfect. La fel ca o eclipsă solară, pot părea rece la exterior, însă în interior sunt un spirit cald.</p>
+            <p style="font-size: 1.15em; text-indent: 40px; text-align: justify; color: #aeaa99; line-height: 1.7; margin: 0;">Sunt pasionată de estetica <i>Goth Lolita</i> și ador pisicile, elemente care își găsesc adesea locul în creațiile mele digitales realizate în Krita.</p>
         </section>
 
-        <h2 style="text-align: center; color: #f1d592; margin-top: 60px;">🖼️ Spotlight: Alte Creații</h2>
-        <table class="spotlight-table" width="100%" cellspacing="20">
-            <tr>
-                <td width="50%" style="background-color: #111; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #333;">
-                    <img src="Admy.jpg" width="100%" style="border-radius: 10px;" alt="Me">
-                    <h3 style="color: #f1d592; margin-top: 15px;">Sunt eu :3</h3>
-                </td>
-                <td width="50%" style="background-color: #111; padding: 20px; border-radius: 15px; text-align: center; border: 1px solid #333;">
-                    <img src="Admy1.jpg" width="100%" style="border-radius: 10px;" alt="Me again">
-                    <h3 style="color: #f1d592; margin-top: 15px;">Tot eu ,'3</h3>
-                </td>
-            </tr>
-        </table>
-
-        <div id="album-BAN" style="padding: 100px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">Fisiere din: Ban</h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-                <a href="Img1.jpg" target="_blank"><img src="Img1.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-                <a href="Img2.jpg" target="_blank"><img src="Img2.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-                <a href="img3.jpg" target="_blank"><img src="img3.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-                <a href="img4.jpg" target="_blank"><img src="img4.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-                <a href="img5.jpg" target="_blank"><img src="img5.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">
-                <a href="#colectii" style="color: #111; background: #f1d592; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">⬆ Înapoi la Colecții</a>
-            </p>
+        <div class="goth-lines-divider">
+            <div class="line"></div>
+            <div class="center-symbol">✥ ✥ ✥</div>
+            <div class="line"></div>
         </div>
 
-        <div id="album-FAN-ARTS" style="padding: 100px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">Fisiere din: FAN ARTS</h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-                <a href="Meow.jpg" target="_blank"><img src="Meow.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">
-                <a href="#colectii" style="color: #111; background: #f1d592; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">⬆ Înapoi la Colecții</a>
-            </p>
-        </div>
-         <div id="album-My Characters" style="padding: 100px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">Fisiere din: My Characters</h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-                <a href="Vall.jpg" target="_blank"><img src="Vall.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">
-                <a href="#colectii" style="color: #111; background: #f1d592; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">⬆ Înapoi la Colecții</a>
-            </p>
-        </div>
-         <div id="album-Procreate" style="padding: 100px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">Fisiere din: Procreate</h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-                <a href="Ochi.jpg" target="_blank"><img src="Ochi.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">
-                <a href="#colectii" style="color: #111; background: #f1d592; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">⬆ Înapoi la Colecții</a>
-            </p>
-        </div>
-          <div id="album-ME" style="padding: 100px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">Fisiere din: ME</h2>
-            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 30px;">
-                <a href="Admy.jpg" target="_blank"><img src="Admy.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-                 <a href="Admy1.jpg" target="_blank"><img src="Admy1.jpg" width="280" style="border-radius: 10px; border: 2px solid #333;"></a>
-            </div>
-            <p style="text-align: center; margin-top: 40px;">
-                <a href="#colectii" style="color: #111; background: #f1d592; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold;">⬆ Înapoi la Colecții</a>
-            </p>
-        </div>
-        <section id="contact" style="text-align: center; padding: 60px 20px; background: #111; margin: 50px 0; border-top: 2px solid #e2b04a; border-radius: 20px;">
-            <h2 style="color: #f1d592; letter-spacing: 2px;">🔗 GĂSEȘTE-MĂ AICI</h2>
-            <div style="margin-top: 30px;">
-                <a href="https://www.tiktok.com/@_admy_" target="_blank" style="color: #ffb347; margin: 0 15px; text-decoration: none; font-size: 1.1em; display: inline-block;">TikTok 🎵</a>
-                <a href="https://www.instagram.com/_admy_ad" target="_blank" style="color: #ffb347; margin: 0 15px; text-decoration: none; font-size: 1.1em; display: inline-block;">Instagram 📸</a>
-                <a href="https://t.me/MiaulLumi" target="_blank" style="color: #ffb347; margin: 0 15px; text-decoration: none; font-size: 1.1em; display: inline-block;">Telegram 🐈⬛</a>
-            </div>
-        </section>
-
-        <section id="playlist" style="padding: 50px 0; border-top: 1px solid #333;">
-            <h2 style="color: #f1d592; text-align: center;">🎧 Playlist-ul Artistului</h2>
-            <p style="text-align: center; color: #888; margin-bottom: 30px;">Ce ascult în timp ce desenez:</p>
-            <div style="max-width: 700px; margin: auto; display: flex; flex-direction: column; gap: 10px; padding: 0 20px;">
+        <!-- ARHIVA COLECȚII (REPARATĂ VIZUAL ȘI FUNCȚIONAL) -->
+        <section id="colectii" style="text-align: center; padding: 10px 0;">
+            <h2 class="text-auriu" style="font-size: 3em; letter-spacing: 6px; margin-bottom: 5px;">_^~ Arhiva de Proiecte ~^_</h2>
+            <div class="sub-baroc">⌠ APASĂ PENTRU DESCHIDERE FILE ⌡</div>
+            
+            <div style="margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center;">
                 
-                <a href="https://www.youtube.com/results?search_query=Scorpions+Still+Loving+You" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Still Loving You</a>
-                <a href="https://www.youtube.com/results?search_query=На+заре" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">На заре</a>
-                <a href="https://www.youtube.com/results?search_query=Тёплые+коты" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Тёплые коты</a>
-                <a href="https://www.youtube.com/results?search_query=Скинь+котиков" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Скинь котиков</a>
-                <a href="https://www.youtube.com/results?search_query=Я+свободен" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Я свобоden</a>
-                <a href="https://www.youtube.com/results?search_query=I+know+I+know.+-+Hatsune+Miku" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">I know I know. - Hatsune Miku</a>
-                <a href="https://www.youtube.com/results?search_query=HOYO-MiX+-+TruE" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">HOYO-MiX - TruE (feat. Isabelle Huang)</a>
-                <a href="https://www.youtube.com/results?search_query=Melham_Music+for+Лололошка+-+НОВОЕ+ПОКОЛЕНИЕ" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Music for Лололошка - НОВОЕ ПОКОЛЕНИЕ</a>
-                <a href="https://www.youtube.com/results?search_query=This+is+my+goodbye..." target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">This is my goodbye...</a>
-                <a href="https://www.youtube.com/results?search_query=東京真中" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">東京真中 (Tokyo Manaka)</a>
-                <a href="https://www.youtube.com/results?search_query=Wanacry.exe" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Wanacry.exe</a>
-                <a href="https://www.youtube.com/results?search_query=Bernadette" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Bernadette</a>
-                <a href="https://www.youtube.com/results?search_query=Mother+Mary" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Mother Mary</a>
-                <a href="https://www.youtube.com/results?search_query=Heaven" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Heaven</a>
-                <a href="https://www.youtube.com/results?search_query=No+surprises" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">No surprises</a>
-                <a href="https://www.youtube.com/results?search_query=Imnul+CCCP" target="_blank" style="background: #222; color: #f1d592; padding: 15px; border-radius: 10px; text-decoration: none; border: 1px solid #333;">Imnul CCCP</a>
+                <!-- Album 1 -->
+                <div class="album-box" onclick="showAlbum('BAN')" style="animation-delay: 0s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="Img1.jpg" class="art-img" alt="Ban Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">BAN</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 01 ]</span>
+                </div>
 
+                <!-- Album 2 -->
+                <div class="album-box" onclick="showAlbum('FAN_ARTS')" style="animation-delay: 0.3s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="Meow.jpg" class="art-img" alt="Fan Arts Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">FAN ARTS</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 02 ]</span>
+                </div>
+
+                <!-- Album 3 -->
+                <div class="album-box" onclick="showAlbum('Procreate')" style="animation-delay: 0.6s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="pro.png" class="art-img" alt="Procreate Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">Procreate</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 03 ]</span>
+                </div>
+
+                <!-- Album 4 -->
+                <div class="album-box" onclick="showAlbum('IbisPaint')" style="animation-delay: 0.9s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="ibisme.png" class="art-img" alt="IbisPaint Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">IbisPaint</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 04 ]</span>
+                </div>
+
+                <!-- Album 5 -->
+                <div class="album-box" onclick="showAlbum('Krita')" style="animation-delay: 1.2s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="Krita1.png" class="art-img" alt="Krita Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">Krita</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 05 ]</span>
+                </div>
+
+                <!-- Album 6 -->
+                <div class="album-box" onclick="showAlbum('ME')" style="animation-delay: 1.5s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="Admy.jpg" class="art-img" alt="Me Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">ME</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 06 ]</span>
+                </div>
+
+                <!-- Album 7 -->
+                <div class="album-box" onclick="showAlbum('MyCharacters')" style="animation-delay: 1.8s;">
+                    <div class="goth-bow" style="top: -12px; left: 10px; font-size: 11px;"></div>
+                    <div class="art-img-container">
+                        <img src="Vall.jpg" class="art-img" alt="My Characters Cover">
+                    </div>
+                    <div style="height: 1px; background: #4a4135; margin: 12px 0 6px 0;"></div>
+                    <h3 class="scris-auriu-solid" style="margin: 0; font-size: 1.1em; letter-spacing: 2px;">My Characters</h3>
+                    <span style="font-size: 9px; color: #4a4135;">[ FILE // 07 ]</span>
+                </div>
             </div>
         </section>
+
+        <!-- NOUL LIGHTBOX MODAL GOTIC (DINAMIC ȘI PERFECT COMPATIBIL) -->
+        <div id="albumModal" class="goth-modal" onclick="handleModalClick(event)">
+            <div class="modal-content">
+                <div class="goth-bow" style="top: -10px; left: 30px;"></div>
+                <div class="goth-bow" style="top: -10px; right: 30px;"></div>
+                
+                <div class="corner-decor tl"></div><div class="corner-decor tr"></div>
+                <div class="corner-decor bl"></div><div class="corner-decor br"></div>
+                
+                <h2 id="modalTitle" class="text-auriu" style="font-size: 2.2em; margin: 0; letter-spacing: 4px;">Nume Album</h2>
+                <div id="modalSubtitle" style="color: #4a4135; font-size: 11px; margin-top: 5px; letter-spacing: 2px;">[ FILE // DATA ]</div>
+                <div class="lace-divider" style="margin: 20px 0;"></div>
+                
+                <!-- Aici se încarcă dinamic imaginile ne-strivite -->
+                <div id="modalImagesGrid" class="modal-img-grid"></div>
+                
+                <div class="lace-divider" style="margin: 20px 0;"></div>
+                <button class="btn-inapoi" onclick="closeModal()">↰ Închide Dosarul</button>
+            </div>
+        </div>
+
+        <!-- FULLSCREEN VIEWER PENTRU DETALII MAXIME -->
+        <div id="fullscreenViewer" class="fullscreen-viewer" onclick="closeFullscreen()">
+            <img id="fullscreenImage" class="fullscreen-img" src="" alt="Desen marit">
+            <div style="position: absolute; bottom: 30px; color: #b38728; font-family: sans-serif; letter-spacing: 2px; text-shadow: 0 0 10px #000; font-size: 12px;">
+                ✟ Click oriunde pentru a reveni ✟
+            </div>
+        </div>
+
+        <!-- PLAYLIST -->
+        <section id="playlist" class="goth-frame" style="max-width:700px;">
+            <div class="corner-decor tl"></div><div class="corner-decor tr"></div>
+            <div class="corner-decor bl"></div><div class="corner-decor br"></div>
+            <h2 class="text-auriu" style="text-align: center; font-size: 2em; margin-bottom: 5px; letter-spacing: 3px;">Atmospheric Playlist</h2>
+            <div class="sub-baroc" style="text-align: center;">⌠ COLECȚIE DE SUNETE INSPIRAȚIONALE ⌡</div>
+            
+            <div class="playlist-container">
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Scorpions+Still+Loving+You" target="_blank"><span>Still Loving You</span> <small style="color:#4a4135;">[01]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=На+заре" target="_blank"><span>На заре</span> <small style="color:#4a4135;">[02]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Тёплые+коты" target="_blank"><span>Тёплые коты</span> <small style="color:#4a4135;">[03]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Скинь+котиков" target="_blank"><span>Скинь котиков</span> <small style="color:#4a4135;">[04]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Я+свобоden" target="_blank"><span>Я свобоden</span> <small style="color:#4a4135;">[05]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=I+know+I+know.+-+Hatsune+Miku" target="_blank"><span>I know I know. - Hatsune Miku</span> <small style="color:#4a4135;">[06]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=HOYO-MiX+-+TruE" target="_blank"><span>HOYO-MiX - TruE (feat. Isabelle Huang)</span> <small style="color:#4a4135;">[07]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Melham+Music+for+Лололошка+-+НОВОЕ+ПОКОЛЕНИЕ" target="_blank"><span>Music for Лололошка - НОВОЕ ПОКОЛЕНИЕ</span> <small style="color:#4a4135;">[08]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=This+is+my+goodbye..." target="_blank"><span>This is my goodbye...</span> <small style="color:#4a4135;">[09]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=東京真中" target="_blank"><span>東京真中 (Tokyo Manaka)</span> <small style="color:#4a4135;">[10]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Wanacry.exe" target="_blank"><span>Wanacry.exe</span> <small style="color:#4a4135;">[11]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Bernadette" target="_blank"><span>Bernadette</span> <small style="color:#4a4135;">[12]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Mother+Mary" target="_blank"><span>Mother Mary</span> <small style="color:#4a4135;">[13]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Heaven" target="_blank"><span>Heaven</span> <small style="color:#4a4135;">[14]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=No+surprises" target="_blank"><span>No surprises</span> <small style="color:#4a4135;">[15]</small></a>
+                <a class="playlist-track" href="https://www.youtube.com/results?search_query=Imnul+CCCP" target="_blank"><span>Imnul CCCP</span> <small style="color:#4a4135;">[16]</small></a>
+            </div>
+        </section>
+
+        <div class="goth-lines-divider">
+            <div class="line"></div>
+            <div class="center-symbol">❖</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- CONTACT -->
+        <section id="contact" style="text-align: center; padding: 50px 20px; background: #000000; border: 1px solid #b38728; outline: 4px double #4a4135; outline-offset: 4px; max-width: 820px; margin: 40px auto; position: relative;">
+            <div class="goth-bow" style="top: -10px; left: 50%; transform: translateX(-50%); font-size: 16px;"></div>
+            
+            <h2 class="text-auriu" style="letter-spacing: 5px; font-size: 2.1em; margin: 0 0 10px 0;">✥ REȚELE CONECTATE ✥</h2>
+            <div class="sub-baroc">── GATEWAYS OF TRANSMISSION ──</div>
+            
+            <div style="margin-top: 30px; display: flex; justify-content: center; flex-wrap: wrap; gap: 25px;">
+                <a href="https://www.tiktok.com/@_admy_" target="_blank" class="scris-auriu-solid" style="text-decoration: none; font-size: 1.2em; border: 1px solid #4a4135; outline: 2px double #b38728; outline-offset: -5px; padding: 15px 35px; background: #0a0a0a;">TIKTOK</a>
+                <a href="https://www.instagram.com/_admy_ad" target="_blank" class="scris-auriu-solid" style="text-decoration: none; font-size: 1.2em; border: 1px solid #4a4135; outline: 2px double #b38728; outline-offset: -5px; padding: 15px 35px; background: #0a0a0a;">INSTAGRAM</a>
+                <a href="https://t.me/MiaulLumi" target="_blank" class="scris-auriu-solid" style="text-decoration: none; font-size: 1.2em; border: 1px solid #4a4135; outline: 2px double #b38728; outline-offset: -5px; padding: 15px 35px; background: #0a0a0a;">TELEGRAM</a>
+            </div>
+        </section>
+
     </main>
 
-    <footer style="text-align: center; padding: 50px; color: #555; background: #0a0a0a;">
-        <p>&copy; 2026 MIAUL LUMII | Created with Passion</p>
+    <footer style="text-align: center; padding: 50px 20px; color: #4a4135; background: #000000; font-size: 0.95em; border-top: 4px double #b38728; letter-spacing: 3px; font-weight: bold; margin-top: 80px;">
+        <div>&copy; 2026 MIAUL LUMII | MEMENTO MORI.</div>
+        <div style="font-size: 10px; color: #2e261d; margin-top: 10px; letter-spacing: 6px;">DESIGN INTEGRAL GENERAT PRIN CSS VECTORIAL - MANA-SAMA EDITION</div>
     </footer>
+
+    <!-- INTERACTIVITATE ȘI RECONSTRUIRE ALBUME DINAMICE -->
+    <script>
+        // Baza ta de date cu desene pentru fiecare album
+        const catalogAlbume = {
+            'BAN': {
+                titlu: 'BAN',
+                subtitlu: '[ FILE // 01 ]',
+                imagini: ['Img1.jpg', 'Img2.jpg', 'img3.jpg', 'img4.jpg', 'img5.jpg']
+            },
+            'FAN_ARTS': {
+                titlu: 'FAN ARTS',
+                subtitlu: '[ FILE // 02 ]',
+                imagini: ['Meow.jpg', 'Static.png' , 'profan.png', 'profan1.png', 'profan2.png', 'profan3.png']
+            },
+            'Procreate': {
+                titlu: 'PROCREATE',
+                subtitlu: '[ FILE // 03 ]',
+                imagini: ['Ochi.jpg', 'pro.png' , 'pro1.png', 'profan2.png', 'profan3.png', 'profan1.png', 'profanwe.png']
+            },
+            'IbisPaint': {
+                titlu: 'IBISPAINT',
+                subtitlu: '[ FILE // 04 ]',
+                imagini: ['ibis.png'] 
+            },
+            'Krita': {
+                titlu: 'KRITA',
+                subtitlu: '[ FILE // 05 ]',
+                imagini: ['Krita.png', 'krita2.png', 'krita1.png']
+            },
+            'ME': {
+                titlu: 'ME',
+                subtitlu: '[ FILE // 06 ]',
+                imagini: ['Admy.jpg']
+            },
+            'MyCharacters': {
+                titlu: 'MY CHARACTERS',
+                subtitlu: '[ FILE // 07 ]',
+                imagini: ['Vall.jpg']
+            }
+        };
+
+        // Deschide albumul în Lightbox modal
+        function showAlbum(albumKey) {
+            const album = catalogAlbume[albumKey];
+            if (!album) return;
+
+            document.getElementById('modalTitle').textContent = album.titlu;
+            document.getElementById('modalSubtitle').textContent = album.subtitlu;
+
+            const grid = document.getElementById('modalImagesGrid');
+            grid.innerHTML = ''; // Curăță tot ce era înainte
+
+            // Generează dinamic imaginile din album
+            album.imagini.forEach(imgUrl => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'modal-img-wrapper';
+
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.className = 'modal-img';
+                img.alt = album.titlu;
+                // Click pe imagine deschide vizualizatorul pe tot ecranul
+                img.onclick = function() {
+                    openFullscreen(imgUrl);
+                };
+
+                // Tratare eroare: dacă imaginea nu este găsită pe disc, pune un placeholder frumos
+                img.onerror = function() {
+                    this.src = `https://placehold.co/600x600/0a0a0a/b38728?text=${album.titlu}`;
+                };
+
+                wrapper.appendChild(img);
+                grid.appendChild(wrapper);
+            });
+
+            const modal = document.getElementById('albumModal');
+            modal.style.display = 'block';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            // Oprește scroll-ul paginii de fundal când albumul e deschis
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Închide dosarul/albumul deschis
+        function closeModal() {
+            const modal = document.getElementById('albumModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
+        // Închide dacă se dă click în afara cutiei negre
+        function handleModalClick(event) {
+            if (event.target.id === 'albumModal') {
+                closeModal();
+            }
+        }
+
+        // Deschiderea unui desen pe tot ecranul (FULLSCREEN)
+        function openFullscreen(imgSrc) {
+            const viewer = document.getElementById('fullscreenViewer');
+            const viewerImg = document.getElementById('fullscreenImage');
+            viewerImg.src = imgSrc;
+            
+            viewer.style.display = 'flex';
+            setTimeout(() => {
+                viewer.classList.add('active');
+            }, 10);
+        }
+
+        // Închiderea desenului mărit
+        function closeFullscreen() {
+            const viewer = document.getElementById('fullscreenViewer');
+            viewer.classList.remove('active');
+            setTimeout(() => {
+                viewer.style.display = 'none';
+            }, 300);
+        }
+    </script>
 
 </body>
 </html>
